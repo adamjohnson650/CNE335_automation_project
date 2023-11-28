@@ -1,10 +1,17 @@
+import subprocess
+
 class Server:
-    """ Server class for representing and manipulating servers. """
+
 
     def __init__(self, server_ip):
-        # TODO -
         self.server_ip = server_ip
 
     def ping(self):
-        # TODO - Use os module to ping the server
-        return
+
+        command = ['ping', '-n', '4', self.server_ip]
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        output, _ = process.communicate()
+        if process.returncode == 0:
+            return f"Server {self.server_ip} is reachable."
+        else:
+            return f"Server {self.server_ip} is unreachable."
