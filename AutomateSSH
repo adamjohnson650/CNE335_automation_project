@@ -1,0 +1,29 @@
+pip install paramiko --user
+import paramiko
+
+hostname = '52.32.42.247'
+username = 'ubuntu'
+key_filename = 'C:\\Users\\ajjoh\\Downloads\\AutomateSSH_Adam_JohnsonKPpem.pem'
+
+
+update_command = 'sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove && sudo apt-get autoclean'
+
+
+try:
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    private_key = paramiko.RSAKey.from_private_key_file(key_filename)
+    ssh_client.connect(hostname=hostname, username=username, pkey=private_key)
+
+    # Execute the update command
+    stdin, stdout, stderr = ssh_client.exec_command(update_command)
+
+    # Read and print command output
+    for line in stdout.readline():
+        print(line.strip())
+
+    # Close SSH connection
+    ssh_client.close()
+
+except Exception as e:
+    print(f"Error: {e}")
