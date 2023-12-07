@@ -11,9 +11,10 @@ def print_program_info():
 if __name__ == '__main__':
     print_program_info()
     # TODO - Create a Server object
-    server_ip = "52.32.42.247"
-    server = Server(server_ip)
+    server_ip = Server("52.32.42.247")
+
     # TODO - Call Ping method and print the results
 
-    ping_result = server.ping()
-    print(ping_result)
+    ping_result = server_ip.ping()
+    print("Ping Results:", ping_result)
+    result = server_ip.update()
